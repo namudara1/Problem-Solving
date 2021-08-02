@@ -1,0 +1,141 @@
+package com.codewithdara;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class NP {
+
+    private String name;
+    private int price;
+
+    NP(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getN(){
+        return this.name;
+    }
+    public int getP(){
+        return this.price;
+    }
+}
+
+
+class ice {
+    private int topsAmount ;
+    private NP  [] order;
+
+    public ice(int a, NP[] flvrs) {
+        this.topsAmount=a;
+        this.order = flvrs;
+    }
+
+    public void getDetails(int topings) {
+        int i=0;
+        int TotalPrice=0;
+        while(i!=topings){
+            System.out.println(this.order[i].getN()+"->");
+            TotalPrice=TotalPrice + this.order[i].getP();
+            i++;
+        }
+
+        System.out.println("price:"+TotalPrice);
+
+    }
+}
+
+
+
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        ArrayList<NP> npAr = new ArrayList<NP>();
+
+
+        int ch=0;
+
+
+        while(ch!=3){
+
+            System.out.println("1) add flavor\n 2)buy 3) exit");
+            System.out.println("enter choice:");
+
+            Scanner sc= new Scanner(System.in);
+            ch = sc.nextInt();
+            sc.nextLine();
+
+            switch(ch){
+                case 1: npAr.add(addFlav()); break;
+                case 2: buy(npAr); break;
+                case 3: return;
+            }
+        }
+
+
+
+
+    }
+
+    public static void buy(ArrayList<NP> npAr){
+
+        Scanner sc= new Scanner(System.in);
+        int i=0;
+        int lenthOFnpAr = npAr.size();
+        System.out.println("available flavours are:");
+        while(i!=lenthOFnpAr)
+        {
+            System.out.println(npAr.get(i).getN());
+            i++;
+        }
+
+        System.out.println("enter flavor amount:");
+        int a= sc.nextInt();
+        sc.nextLine();
+
+        NP [] flvrs = new NP[a];
+
+
+        System.out.println("enter flavors in order:");
+
+        int j =0;
+        int x;
+        while(j!=a){
+            System.out.println("enter flavor numnber:");
+
+                x = sc.nextInt();
+                flvrs[j] = npAr.get(x-1);
+                sc.nextLine();
+            j++;
+        }
+
+
+        ice object = new ice(a,flvrs);
+        object.getDetails(a);
+    }
+
+    public static NP addFlav(){
+
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("enter a flavout:");
+        String flav = sc.nextLine();
+        System.out.println("enter its price:");
+        int price = sc.nextInt();
+
+
+        NP object = new NP(flav,price);
+        System.out.println("falvor created!");
+        return object;
+
+    }
+
+
+
+}
+

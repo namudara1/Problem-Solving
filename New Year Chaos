@@ -1,0 +1,111 @@
+//It is New Year's Day and people are in line for the Wonderland rollercoaster ride. Each person wears a sticker indicating their initial position in the queue from  to . Any person can bribe the person directly in front of them to swap positions, but they still wear their original sticker. One person can bribe at most two others.
+//
+//        Determine the minimum number of bribes that took place to get to a given queue order. Print the number of bribes, or, if anyone has bribed more than two people, print Too chaotic.
+
+
+
+package com.codewithdara;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+//import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader inp = new BufferedReader (new InputStreamReader(System.in));
+        int test= Integer.parseInt(inp.readLine());
+
+
+
+//        Scanner sc = new Scanner(System.in);
+//        int test = sc.nextInt();
+
+        ArrayList<Integer> [] list = new ArrayList[test];
+
+        for(int i =0;i<test;i++){
+
+            list[i] = new ArrayList<Integer>();
+
+            int qamount = Integer.parseInt(inp.readLine());
+            String line = inp.readLine();
+            String[] strs = line.trim().split("\\s+");
+
+
+            for(int j =0;j<qamount;j++){
+                list[i].add(Integer.parseInt(strs[j]));
+
+            }
+
+
+        }
+
+        for(int i=0;i<test;i++){
+
+            int count= check(list[i]);
+
+            if(count!=-1){
+                System.out.println(count);
+            }
+            else{
+                System.out.println("Too chaotic");
+            }
+
+        }
+
+
+
+    }
+
+    public static int check(ArrayList<Integer> x){
+
+        int len = x.size();
+
+
+        ArrayList<Integer> correctOrder = new ArrayList<Integer>();
+
+        int count=0;
+
+        for(int i =0;i<len;i++){
+            correctOrder.add(i+1 );
+        }
+
+        for(int i=0;i<len;i++){
+
+            if(correctOrder.get(i) != x.get(i)){
+                int diff = correctOrder.indexOf(x.get(i))-i;
+
+                if(diff>2){
+                    count=-1;
+                    break;
+                }
+                else{
+                    count =count + diff;
+
+                    int swap;
+                    while(diff!=0){
+
+
+
+                        swap = correctOrder.get(i+diff);
+
+                        correctOrder.set(i+diff,correctOrder.get(i+diff-1));
+
+                        correctOrder.set(i+diff-1,swap);
+                        diff--;
+
+                    }
+                }
+
+            }
+        }
+
+        return count;
+    }
+
+
+
+}
